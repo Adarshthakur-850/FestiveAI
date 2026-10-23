@@ -173,10 +173,49 @@ FestiveAI/
 │   ├── vite.config.ts
 │   └── Dockerfile
 ├── docs/                             # Architecture, Security, Troubleshooting
+├── .github/workflows/deploy-pages.yml# Automated GitHub Pages CI/CD
+├── render.yaml                       # 1-Click Render.com Blueprint (Backend + Frontend)
+├── vercel.json                       # Vercel deployment configuration
 ├── docker-compose.yml
 ├── .env.example
 └── README.md
 ```
+
+---
+
+## ☁️ Cloud Deployment & Hosting
+
+### Option 1: Render.com (Recommended Full-Stack Free Tier)
+
+FestiveAI includes a native `render.yaml` Blueprint that deploys both the FastAPI Backend and the Vite React Frontend simultaneously with zero manual configuration.
+
+1. Create a free account at [render.com](https://render.com).
+2. Go to your Render Dashboard and click **New +** > **Blueprint**.
+3. Connect your repository: `https://github.com/Adarshthakur-850/FestiveAI`.
+4. Render will automatically detect `render.yaml` and provision:
+   - `festiveai-backend` (FastAPI Web Service with auto-migrating SQLite / Postgres)
+   - `festiveai-frontend` (React Static Site with automatic SPA routing)
+5. Click **Apply** to deploy!
+
+### Option 2: GitHub Pages (Free Automated UI Hosting)
+
+The repository includes a ready-to-run GitHub Actions workflow (`.github/workflows/deploy-pages.yml`):
+
+1. On your GitHub repo, go to **Settings** > **Pages**.
+2. Under **Build and deployment** > **Source**, choose **GitHub Actions**.
+3. Push to `main` (or run the workflow manually from the Actions tab).
+4. Your frontend will be live at:
+   `https://Adarshthakur-850.github.io/FestiveAI/`
+
+*(Note: Connect `VITE_API_URL` secret in GitHub Settings > Secrets to point to your live backend service).*
+
+### Option 3: Vercel (Frontend)
+
+1. Go to [vercel.com](https://vercel.com) and click **Add New Project**.
+2. Import `Adarshthakur-850/FestiveAI`.
+3. Set **Root Directory** to `./frontend` or keep root (uses `vercel.json`).
+4. Add environment variable `VITE_API_URL` pointing to your deployed backend.
+5. Click **Deploy**.
 
 ---
 

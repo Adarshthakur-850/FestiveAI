@@ -1,0 +1,55 @@
+services:
+  # -------------------------------------------------------------
+  # 1. FestiveAI Backend Web Service (FastAPI)
+  # -------------------------------------------------------------
+  - type: web
+    name: festiveai-backend
+    runtime: python
+    region: oregon
+    plan: free
+    branch: main
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "python backend/run.py"
+    healthCheckPath: "/api/v1/health"
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "false"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ENCRYPTION_KEY
+        value: "gAAAAABmFz-mockEncryptionKeyFestiveAI32BytesNeededForFernet="
+      - key: DATABASE_URL
+        value: "sqlite:///./festiveai.db"
+      - key: DEFAULT_AI_PROVIDER
+        value: "mock"
+      - key: MEDIA_ROOT
+        value: "./media"
+      - key: STATIC_UPLOADS
+        value: "./media/uploads"
+      - key: GENERATED_ASSETS
+        value: "./media/generated"
+      - key: AUTONOMOUS_WORKER_INTERVAL_SECONDS
+        value: "300"
+      - key: PORT
+        value: 10000
+
+  # -------------------------------------------------------------
+  # 2. FestiveAI Frontend Static Site (React Vite)
+  # -------------------------------------------------------------
+  - type: web
+    name: festiveai-frontend
+    runtime: static
+    region: oregon
+    plan: free
+    branch: main
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: "./frontend/dist"
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: "https://festiveai-backend.onrender.com/api/v1"
