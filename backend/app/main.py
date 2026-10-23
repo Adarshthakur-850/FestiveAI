@@ -39,6 +39,11 @@ async def background_scheduler_worker():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Ensure media directories exist
+    os.makedirs(settings.MEDIA_ROOT, exist_ok=True)
+    os.makedirs(settings.STATIC_UPLOADS, exist_ok=True)
+    os.makedirs(settings.GENERATED_ASSETS, exist_ok=True)
+
     # Startup: Create tables and seed initial festival definitions
     logger.info("Initializing database schema...")
     Base.metadata.create_all(bind=engine)
@@ -51,13 +56,17 @@ async def lifespan(app: FastAPI):
     finally:
         db.close()
 
-    # Start scheduler background worker
-    scheduler_task = asyncio.create_task(background_scheduler_worker())
+    # Start scheduler background worker only in persistent server environments (not serverless)
+    is_serverless = os.environ.get("VERCEL") == "1" or os.environ.get("AWS_LAMBDA_FUNCTION_NAME") is not None
+    scheduler_task = None
+    if not is_serverless:
+        scheduler_task = asyncio.create_task(background_scheduler_worker())
 
     yield
 
     # Shutdown
-    scheduler_task.cancel()
+    if scheduler_task:
+        scheduler_task.cancel()
     logger.info("FestiveAI backend shutdown complete.")
 
 app = FastAPI(

@@ -28,12 +28,20 @@ class Settings(BaseSettings):
     ENCRYPTION_KEY: str = "gAAAAABmFz-mockEncryptionKeyFestiveAI32BytesNeededForFernet="
     
     # Database (Defaults to SQLite for instant local run, supports PostgreSQL)
-    DATABASE_URL: str = "sqlite:///./festiveai.db"
+    DATABASE_URL: str = Field(
+        default_factory=lambda: "sqlite:////tmp/festiveai.db" if os.environ.get("VERCEL") == "1" else "sqlite:///./festiveai.db"
+    )
     
     # Storage & Media Assets
-    MEDIA_ROOT: str = "./media"
-    STATIC_UPLOADS: str = "./media/uploads"
-    GENERATED_ASSETS: str = "./media/generated"
+    MEDIA_ROOT: str = Field(
+        default_factory=lambda: "/tmp/media" if os.environ.get("VERCEL") == "1" else "./media"
+    )
+    STATIC_UPLOADS: str = Field(
+        default_factory=lambda: "/tmp/media/uploads" if os.environ.get("VERCEL") == "1" else "./media/uploads"
+    )
+    GENERATED_ASSETS: str = Field(
+        default_factory=lambda: "/tmp/media/generated" if os.environ.get("VERCEL") == "1" else "./media/generated"
+    )
     
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
