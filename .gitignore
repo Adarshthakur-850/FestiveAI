@@ -1,0 +1,68 @@
+# Python & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+backend/.venv/
+.venv/
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Node & Frontend Dependencies
+frontend/node_modules/
+node_modules/
+frontend/dist/
+dist/
+.npm
+.eslintcache
+
+# SQLite Databases & Local Test DBs
+*.db
+*.sqlite
+*.sqlite3
+festiveai.db
+test_festiveai.db
+
+# Environment Secrets & Private Keys
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Pytest & Testing Cache
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Media Assets (Generated creatives & uploads ignored, keep folders with .gitkeep)
+media/generated/*
+!media/generated/.gitkeep
+media/uploads/*
+!media/uploads/.gitkeep
+
+# IDEs & System Metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo

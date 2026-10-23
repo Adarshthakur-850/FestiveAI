@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: festiveai_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-festiveai}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-festiveai_secure_pass_2026}
+      POSTGRES_DB: ${POSTGRES_DB:-festiveai}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U festiveai -d festiveai"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: festiveai_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: festiveai_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=False
+      - DATABASE_URL=postgresql://festiveai:festiveai_secure_pass_2026@db:5432/festiveai
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY:-festiveai_super_secret_jwt_signing_key_production_2026}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY:-gAAAAABmFz-mockEncryptionKeyFestiveAI32BytesNeededForFernet=}
+      - DEFAULT_AI_PROVIDER=${DEFAULT_AI_PROVIDER:-mock}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - INSTAGRAM_APP_ID=${INSTAGRAM_APP_ID:-}
+      - INSTAGRAM_APP_SECRET=${INSTAGRAM_APP_SECRET:-}
+      - LINKEDIN_CLIENT_ID=${LINKEDIN_CLIENT_ID:-}
+      - LINKEDIN_CLIENT_SECRET=${LINKEDIN_CLIENT_SECRET:-}
+    ports:
+      - "8000:8000"
+    volumes:
+      - media_storage:/app/media
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: festiveai_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  postgres_data:
+  redis_data:
+  media_storage:
