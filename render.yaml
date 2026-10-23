@@ -9,8 +9,11 @@ services:
     plan: free
     branch: main
     dockerfilePath: ./Dockerfile
+    dockerContext: .
     healthCheckPath: "/health"
     envVars:
+      - key: PORT
+        value: "10000"
       - key: ENVIRONMENT
         value: production
       - key: DEBUG
