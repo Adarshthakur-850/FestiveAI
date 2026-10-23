@@ -2,23 +2,29 @@ import pytest
 import os
 import sys
 
-# Ensure backend root is on sys.path
+# Ensure backend root is on sys.path and set test environment
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+os.environ["TESTING"] = "1"
+os.environ["DATABASE_URL"] = "sqlite:///./test_festiveai.db"
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.models import Base
-from app.db.session import get_db
+from app.db.session import engine as app_engine, SessionLocal, get_db
+from app.services.calendar_service import CalendarService
 from app.main import app
 
-TEST_DATABASE_URL = "sqlite:///./test_festiveai.db"
-
-@pytest.fixture(scope="session")
-def test_db_engine():
-    engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
-    Base.metadata.create_all(bind=engine)
-    yield engine
-    Base.metadata.drop_all(bind=engine)
+@pytest.fixture(scope="session", autouse=True)
+def init_test_database():
+    """Ensure all database tables exist and seed definitions for tests."""
+    Base.metadata.create_all(bind=app_engine)
+    db = SessionLocal()
+    try:
+        CalendarService.seed_festival_definitions(db)
+    finally:
+        db.close()
+    yield
+    Base.metadata.drop_all(bind=app_engine)
     if os.path.exists("./test_festiveai.db"):
         try:
             os.remove("./test_festiveai.db")
@@ -26,9 +32,8 @@ def test_db_engine():
             pass
 
 @pytest.fixture(scope="function")
-def db_session(test_db_engine):
-    Session = sessionmaker(autocommit=False, autoflush=False, bind=test_db_engine)
-    session = Session()
+def db_session():
+    session = SessionLocal()
     try:
         yield session
     finally:

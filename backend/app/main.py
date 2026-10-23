@@ -14,6 +14,9 @@ from app.api.v1 import api_router
 from app.services.calendar_service import CalendarService
 from app.services.scheduler_service import SchedulerService
 
+import threading
+import time
+
 # Setup Logging
 logging.basicConfig(
     level=logging.INFO,
@@ -21,9 +24,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger("FestiveAI")
 
-async def background_scheduler_worker():
-    """Background task running the autonomous cycle periodically."""
+def background_scheduler_worker():
+    """Background daemon thread running the autonomous cycle periodically."""
     logger.info("FestiveAI autonomous background scheduler worker started.")
+    time.sleep(5)
     while True:
         try:
             db = SessionLocal()
@@ -35,7 +39,7 @@ async def background_scheduler_worker():
                 db.close()
         except Exception as e:
             logger.error(f"Error in scheduler background worker: {e}")
-        await asyncio.sleep(settings.AUTONOMOUS_WORKER_INTERVAL_SECONDS)
+        time.sleep(settings.AUTONOMOUS_WORKER_INTERVAL_SECONDS)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -56,17 +60,15 @@ async def lifespan(app: FastAPI):
     finally:
         db.close()
 
-    # Start scheduler background worker only in persistent server environments (not serverless)
+    # Start scheduler background worker only in persistent server environments (not serverless or testing)
+    is_test = "pytest" in sys.modules or os.environ.get("TESTING") == "1"
     is_serverless = os.environ.get("VERCEL") == "1" or os.environ.get("AWS_LAMBDA_FUNCTION_NAME") is not None
-    scheduler_task = None
-    if not is_serverless:
-        scheduler_task = asyncio.create_task(background_scheduler_worker())
+    if not is_serverless and not is_test:
+        worker_thread = threading.Thread(target=background_scheduler_worker, daemon=True, name="FestiveAI-Scheduler")
+        worker_thread.start()
 
     yield
 
-    # Shutdown
-    if scheduler_task:
-        scheduler_task.cancel()
     logger.info("FestiveAI backend shutdown complete.")
 
 app = FastAPI(

@@ -31,14 +31,16 @@ def test_campaign_duplicate_prevention_and_idempotency(db_session):
     )
     db_session.add(creds)
 
-    festival = FestivalDefinition(
-        slug="diwali",
-        name="Diwali",
-        category="cultural",
-        calculation_type="lunisolar_hindu"
-    )
-    db_session.add(festival)
-    db_session.flush()
+    festival = db_session.query(FestivalDefinition).filter_by(slug="diwali").first()
+    if not festival:
+        festival = FestivalDefinition(
+            slug="diwali",
+            name="Diwali",
+            category="cultural",
+            calculation_type="lunisolar_hindu"
+        )
+        db_session.add(festival)
+        db_session.flush()
 
     # Create campaign
     camp = PublishingCampaign(
