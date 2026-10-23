@@ -2,9 +2,10 @@ import asyncio
 import os
 import logging
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from app.config import settings
 from app.db.session import engine, SessionLocal
 from app.db.migrate import auto_migrate_db
@@ -91,10 +92,39 @@ def health_check():
         "environment": settings.ENVIRONMENT
     }
 
-@app.get("/", tags=["Root"])
-def root():
-    return {
-        "message": f"Welcome to {settings.PROJECT_NAME} API",
-        "documentation": "/docs",
-        "version": settings.VERSION
-    }
+# Resolve frontend dist directory for unified full-stack serving
+frontend_dist_dirs = [
+    os.path.join(os.getcwd(), "frontend", "dist"),
+    os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "frontend", "dist"),
+    os.path.join(os.getcwd(), "dist"),
+]
+
+frontend_dist_path = None
+for d in frontend_dist_dirs:
+    if os.path.exists(d) and os.path.exists(os.path.join(d, "index.html")):
+        frontend_dist_path = os.path.abspath(d)
+        break
+
+if frontend_dist_path:
+    logger.info(f"Serving built React frontend from: {frontend_dist_path}")
+    assets_dir = os.path.join(frontend_dist_path, "assets")
+    if os.path.exists(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="frontend_assets")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_spa(full_path: str):
+        if full_path.startswith("api") or full_path.startswith("static") or full_path in ("health", "docs", "openapi.json"):
+            raise HTTPException(status_code=404, detail="Endpoint not found")
+        
+        file_path = os.path.join(frontend_dist_path, full_path)
+        if full_path and os.path.isfile(file_path):
+            return FileResponse(file_path)
+        return FileResponse(os.path.join(frontend_dist_path, "index.html"))
+else:
+    @app.get("/", tags=["Root"])
+    def root():
+        return {
+            "message": f"Welcome to {settings.PROJECT_NAME} API",
+            "documentation": "/docs",
+            "version": settings.VERSION
+        }

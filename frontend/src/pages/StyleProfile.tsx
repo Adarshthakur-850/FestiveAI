@@ -419,7 +419,13 @@ export const StyleProfilePage: React.FC<StyleProfileProps> = ({
               <div className="w-16 h-16 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center overflow-hidden shrink-0">
                 {profile?.brand_logo_url ? (
                   <img
-                    src={profile.brand_logo_url.startsWith('http') ? profile.brand_logo_url : `http://localhost:8000${profile.brand_logo_url}`}
+                    src={(() => {
+                      if (!profile.brand_logo_url) return '';
+                      if (profile.brand_logo_url.startsWith('http')) return profile.brand_logo_url;
+                      const apiUrl = import.meta.env.VITE_API_URL || '';
+                      const base = apiUrl ? apiUrl.replace(/\/api\/v1\/?$/, '') : '';
+                      return `${base}${profile.brand_logo_url.startsWith('/') ? '' : '/'}${profile.brand_logo_url}`;
+                    })()}
                     alt="Brand Logo"
                     className="max-h-full max-w-full object-contain p-1"
                   />

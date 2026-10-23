@@ -186,17 +186,16 @@ FestiveAI/
 
 ## ☁️ Cloud Deployment & Hosting
 
-### Option 1: Render.com (Recommended Full-Stack Free Tier)
+### Option 1: Render.com (Recommended — Unified Full-Stack Single Service)
 
-FestiveAI includes a native `render.yaml` Blueprint that deploys both the FastAPI Backend and the Vite React Frontend simultaneously with zero manual configuration.
+FestiveAI includes a multi-stage `Dockerfile` and native `render.yaml` that deploys the entire application (React SPA + FastAPI + Database + Background Scheduler) as a **single unified container** on Render's Free Tier with zero CORS issues.
 
-1. Create a free account at [render.com](https://render.com).
-2. Go to your Render Dashboard and click **New +** > **Blueprint**.
-3. Connect your repository: `https://github.com/Adarshthakur-850/FestiveAI`.
-4. Render will automatically detect `render.yaml` and provision:
-   - `festiveai-backend` (FastAPI Web Service with auto-migrating SQLite / Postgres)
-   - `festiveai-frontend` (React Static Site with automatic SPA routing)
-5. Click **Apply** to deploy!
+1. Go to [render.com](https://render.com) and click **New +** > **Blueprint** (or click the **Deploy to Render** badge at the top of the README).
+2. Connect your repository: `https://github.com/Adarshthakur-850/FestiveAI`.
+3. Render will detect `render.yaml` and configure the **`festiveai`** unified service.
+4. Click **Apply** to deploy!
+   - Your frontend will load directly at root `/`.
+   - Your API will be accessible at `/api/v1` and Swagger docs at `/docs`.
 
 ### Option 2: GitHub Pages (Free Automated UI Hosting)
 

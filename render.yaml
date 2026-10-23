@@ -1,21 +1,16 @@
 services:
-  # -------------------------------------------------------------
-  # 1. FestiveAI Backend Web Service (FastAPI)
-  # -------------------------------------------------------------
+  # ==============================================================================
+  # FestiveAI Unified Full-Stack Service (FastAPI + React Vite in Single Container)
+  # ==============================================================================
   - type: web
-    name: festiveai-backend
-    runtime: python
+    name: festiveai
+    runtime: docker
     region: oregon
     plan: free
     branch: main
-    buildCommand: "pip install -r backend/requirements.txt"
-    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
-    healthCheckPath: "/api/v1/health"
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: "/health"
     envVars:
-      - key: PYTHONPATH
-        value: "backend"
-      - key: PYTHON_VERSION
-        value: "3.12.8"
       - key: ENVIRONMENT
         value: production
       - key: DEBUG
@@ -36,22 +31,3 @@ services:
         value: "./media/generated"
       - key: AUTONOMOUS_WORKER_INTERVAL_SECONDS
         value: "300"
-
-  # -------------------------------------------------------------
-  # 2. FestiveAI Frontend Static Site (React Vite)
-  # -------------------------------------------------------------
-  - type: web
-    name: festiveai-frontend
-    runtime: static
-    region: oregon
-    plan: free
-    branch: main
-    buildCommand: "cd frontend && npm install && npm run build"
-    staticPublishPath: "./frontend/dist"
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
-    envVars:
-      - key: VITE_API_URL
-        value: "https://festiveai-backend.onrender.com/api/v1"
