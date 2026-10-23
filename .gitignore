@@ -35,6 +35,8 @@ dist/
 
 # SQLite Databases & Local Test DBs
 *.db
+*.db-shm
+*.db-wal
 *.sqlite
 *.sqlite3
 festiveai.db
