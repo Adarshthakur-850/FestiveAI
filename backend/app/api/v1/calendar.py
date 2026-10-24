@@ -81,6 +81,7 @@ def get_upcoming_festivals(
             name=item["name"],
             category=item["category"],
             observed_date=item["observed_date"],
+            year=item["year"],
             days_until=item["days_until"],
             relevance_score=relevance,
             is_enabled=is_enabled,

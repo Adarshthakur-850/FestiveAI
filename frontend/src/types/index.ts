@@ -89,6 +89,7 @@ export interface UpcomingFestival {
   name: string;
   category: string;
   observed_date: string;
+  year: number;
   days_until: number;
   relevance_score: number;
   is_enabled: boolean;

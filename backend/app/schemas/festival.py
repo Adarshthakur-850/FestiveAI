@@ -29,6 +29,7 @@ class UpcomingFestivalOut(BaseModel):
     name: str
     category: str
     observed_date: date
+    year: int
     days_until: int
     relevance_score: float
     is_enabled: bool

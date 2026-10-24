@@ -300,6 +300,7 @@ def approve_campaign(
     db.refresh(camp)
     return ResponseBase(success=True, message="Campaign approved and scheduled for autonomous publication", data=map_campaign_to_dto(camp))
 
+@router.post("/{campaign_id}/publish", response_model=ResponseBase[dict])
 @router.post("/{campaign_id}/publish-now", response_model=ResponseBase[dict])
 def publish_campaign_now(
     campaign_id: str,
