@@ -19,7 +19,7 @@ def test_health_check_endpoint():
     data = health_check()
     assert data["status"] == "healthy"
     assert data["service"] == "FestiveAI"
-    assert data["version"] == "1.0.0"
+    assert data["version"] == "1.1.0"
 
 def test_calendar_festivals_endpoint(db_session):
     res = list_all_festivals(db=db_session)

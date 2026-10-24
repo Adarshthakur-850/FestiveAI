@@ -58,6 +58,9 @@ async def lifespan(app: FastAPI):
     try:
         logger.info("Seeding festival definitions & multi-year astronomical observances...")
         CalendarService.seed_festival_definitions(db)
+        logger.info("Bootstrapping default demo workspace, user, and active account...")
+        from app.api.deps import bootstrap_system_demo_data
+        bootstrap_system_demo_data(db)
     finally:
         db.close()
 
