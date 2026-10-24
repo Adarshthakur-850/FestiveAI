@@ -1,6 +1,12 @@
-import asyncio
 import os
 import sys
+
+# Ensure backend root directory is always on sys.path regardless of execution working directory
+_backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _backend_dir not in sys.path:
+    sys.path.insert(0, _backend_dir)
+
+import asyncio
 import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException

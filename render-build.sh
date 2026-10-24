@@ -5,7 +5,7 @@ set -o errexit
 echo "=== FestiveAI Render Deployment Build ==="
 echo "--- Installing Python Backend Dependencies ---"
 pip install --upgrade pip
-pip install -r backend/requirements.txt
+pip install -r requirements.txt
 
 echo "--- Verifying Pre-Compiled Frontend Dist ---"
 if [ ! -d "frontend/dist" ]; then
