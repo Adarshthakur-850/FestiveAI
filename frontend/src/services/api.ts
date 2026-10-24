@@ -7,7 +7,10 @@ import {
   PublishingCampaign,
   AutomationConfig,
   DashboardAnalytics,
-  PublishingAttempt
+  PublishingAttempt,
+  CreateCustomEventPayload,
+  CreateRandomTestEventPayload,
+  CustomEventResponse
 } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api/v1';
@@ -100,6 +103,14 @@ export const api = {
   },
   updateFestivalPreference: async (accountId: string, festivalId: string, updates: { is_enabled?: boolean; relevance_score?: number }) => {
     const res = await apiClient.put<{ success: boolean; data: boolean }>(`/calendar/accounts/${accountId}/festivals/${festivalId}`, updates);
+    return res.data.data;
+  },
+  createCustomEvent: async (payload: CreateCustomEventPayload) => {
+    const res = await apiClient.post<{ success: boolean; message: string; data: CustomEventResponse }>('/calendar/custom-event', payload);
+    return res.data.data;
+  },
+  createRandomTestEvent: async (payload: CreateRandomTestEventPayload) => {
+    const res = await apiClient.post<{ success: boolean; message: string; data: CustomEventResponse }>('/calendar/random-test-event', payload);
     return res.data.data;
   },
 

@@ -250,9 +250,15 @@ class CaptionGenerator:
             body_text = pillar_entry.get(selected_lang, pillar_entry.get("en"))
 
         if not body_text:
-            corpus_entry = FESTIVAL_CAPTION_CORPUS.get(slug, FESTIVAL_CAPTION_CORPUS["diwali"])
-            options = corpus_entry.get(selected_lang, corpus_entry.get("en", []))
-            body_text = random.choice(options) if options else f"Warm festival greetings on {festival.name}!"
+            greetings = json.loads(festival.default_greeting_phrases or "[]")
+            if greetings:
+                body_text = f"{greetings[0]}! Celebrating this milestone with gratitude, passion, and forward momentum."
+            elif slug in FESTIVAL_CAPTION_CORPUS:
+                corpus_entry = FESTIVAL_CAPTION_CORPUS[slug]
+                options = corpus_entry.get(selected_lang, corpus_entry.get("en", []))
+                body_text = random.choice(options) if options else f"Warm festival greetings on {festival.name}!"
+            else:
+                body_text = f"Celebrating {festival.name}! Wishing our entire community, partners, and supporters moments of inspiration, shared progress, and joy."
 
         # 4. Emoji integration according to emoji_frequency
         emoji_freq = style_profile.emoji_frequency if style_profile else "moderate"
@@ -283,8 +289,12 @@ class CaptionGenerator:
         final_caption = f"{body_text}\n\n{sign_off}"
 
         # 6. Hashtag curation (avoiding prohibited terms and adding pillar-specific tags)
-        corpus_entry = FESTIVAL_CAPTION_CORPUS.get(slug, FESTIVAL_CAPTION_CORPUS["diwali"])
-        base_hashtags = corpus_entry.get("hashtags", [f"#{festival.slug.capitalize()}", "#FestiveSeason"])
+        corpus_entry = FESTIVAL_CAPTION_CORPUS.get(slug)
+        if corpus_entry:
+            base_hashtags = corpus_entry.get("hashtags", [f"#{festival.slug.capitalize()}", "#FestiveSeason"])
+        else:
+            clean_name = "".join(filter(str.isalnum, festival.name))
+            base_hashtags = [f"#{clean_name}", "#Celebration", "#Milestone", "#Innovation"]
         brand_tag = f"#{brand.replace(' ', '')}"
 
         pillar_tags = {

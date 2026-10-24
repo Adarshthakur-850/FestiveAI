@@ -160,6 +160,23 @@ class GreetingCompositor:
                     width=2
                 )
 
+        else:
+            # Custom & Random Celebration Event elements (Concentric golden halo & radiant celebration starbursts)
+            for r in [120, 180, 240]:
+                alpha = int(55 * (1 - r / 280))
+                draw.ellipse(
+                    [cx - r, cy - r, cx + r, cy + r],
+                    outline=(accent_color[0], accent_color[1], accent_color[2], alpha),
+                    width=2
+                )
+            for angle in range(0, 360, 45):
+                rad = math.radians(angle)
+                x1 = cx + int(110 * math.cos(rad))
+                y1 = cy + int(110 * math.sin(rad))
+                x2 = cx + int(145 * math.cos(rad))
+                y2 = cy + int(145 * math.sin(rad))
+                draw.line([(x1, y1), (x2, y2)], fill=(accent_color[0], accent_color[1], accent_color[2], 180), width=3)
+
     @staticmethod
     def render_brand_watermark_and_logo(
         image: Image.Image,

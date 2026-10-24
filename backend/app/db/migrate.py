@@ -9,9 +9,6 @@ def auto_migrate_db(engine: Engine):
     Lightweight, safe migration utility for SQLite / PostgreSQL to ensure
     newly added columns are automatically created without dropping tables.
     """
-    inspector = inspect(engine)
-    existing_tables = inspector.get_table_names()
-
     # Column definitions to ensure exist: table_name -> list of (col_name, col_sql_type)
     expected_columns = {
         "style_profiles": [
@@ -36,6 +33,9 @@ def auto_migrate_db(engine: Engine):
     }
 
     with engine.begin() as conn:
+        inspector = inspect(conn)
+        existing_tables = inspector.get_table_names()
+
         for table_name, columns in expected_columns.items():
             if table_name not in existing_tables:
                 continue

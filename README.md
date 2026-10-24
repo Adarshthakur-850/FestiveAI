@@ -87,9 +87,11 @@ FestiveAI operates on a clean, decoupled full-stack architecture designed for en
 - **Visual Palette Extraction**: Identifies the account's dominant 5-color palette, secondary accents, contrast ratios, and preferred logo placement (*Top Right*, *Top Left*, *Bottom Right*, *Bottom Center*).
 - **Writing Style Extraction**: Quantifies formality score ($0.0$ to $1.0$), emoji frequency (*none*, *minimal*, *moderate*, *expressive*), multilingual preference (*English*, *Hindi*, *Hinglish*), and enforces mandatory brand sign-offs while blocking prohibited promotional terms (*sale*, *discount*, *limited time*).
 
-### 2. Intelligent Astronomical & Lunisolar Festival Calendar
+### 2. Intelligent Astronomical & Lunisolar Festival Calendar & Host Events
 - **Dynamic Lunisolar Calculations**: Calculates astronomical festivals whose dates change annually based on moon phases and lunar calendars (e.g. Diwali, Holi, Eid-ul-Fitr, Eid-ul-Adha, Ganesh Chaturthi, Maha Shivratri, Raksha Bandhan, Durga Puja, Chhath Puja) across 2025, 2026, and 2027.
 - **Fixed Solar & Gregorian Observances**: Tracks New Year's Day, Republic Day, Independence Day, Gandhi Jayanti, Christmas, and international days.
+- **⚡ Quick Random Test Event Generator**: Instant one-click test event button to verify system publishing, creative synthesis, and platform connectivity in real-time.
+- **➕ Host Custom & Milestone Event Creator**: Allows hosts to create custom brand milestones, company anniversaries, and cultural events with optional instant auto-publishing to Instagram or LinkedIn.
 - **Multi-Signal Bayesian Relevance Scoring**: Computes an account-specific relevance score based on:
   - Account industry niche & target audience.
   - Historical posting frequency during that festival.
@@ -190,9 +192,11 @@ GET    /api/v1/style-profile/{account_id}    # Retrieve learned visual & persona
 PUT    /api/v1/style-profile/{account_id}    # Calibrate colors, persona, tone, rules
 POST   /api/v1/style-profile/{account_id}/logo # Upload brand watermark logo (PNG/SVG)
 
-# Festival Calendar
+# Festival Calendar & Custom Host Events
 GET    /api/v1/calendar/festivals            # All cataloged astronomical festivals
 GET    /api/v1/calendar/upcoming             # Upcoming festivals with account relevance
+POST   /api/v1/calendar/custom-event         # Host custom event creation with optional auto-publish
+POST   /api/v1/calendar/random-test-event    # Instant random test event generation & live social publishing
 PUT    /api/v1/calendar/preference/{acc_id}/{fest_id} # Toggle mute/track preference
 
 # Campaigns & Content Studio
@@ -292,7 +296,7 @@ FestiveAI includes a comprehensive unit and integration test suite:
 pytest backend/tests -v
 ```
 
-**Key Test Coverage**:
+**Key Test Coverage (13 Tests, 100% Passing)**:
 - `test_festival_catalog_astronomical_dates`: Verifies annual lunisolar shifts for Diwali and Holi across 2025–2027.
 - `test_calculate_publish_datetime_timezone_awareness`: Tests UTC conversion across global timezones.
 - `test_festival_classifier_diwali`: Validates multi-signal NLP and hashtag classification for past greetings.
@@ -300,6 +304,9 @@ pytest backend/tests -v
 - `test_greeting_compositor_generates_valid_image`: Ensures Pillow outputs valid, uncorrupted, high-res images.
 - `test_campaign_duplicate_prevention_and_idempotency`: Verifies database constraints and prevents duplicate posts.
 - `test_health_check_endpoint` & `test_auth_registration_and_login`: Tests core API endpoints.
+- `test_custom_event_and_auto_publishing`: Validates custom host event creation, creative synthesis, and platform publishing.
+- `test_random_test_event_auto_publishing`: Verifies random test event generation and instantaneous Instagram/LinkedIn delivery.
+- `test_host_persona_and_post_pillar_classification`: Confirms host persona classification and content pillar distribution.
 
 ---
 

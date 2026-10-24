@@ -178,3 +178,34 @@ export interface DashboardAnalytics {
   autonomous_mode_enabled_count: number;
   system_health: string;
 }
+
+export interface CreateCustomEventPayload {
+  name: string;
+  category?: string;
+  observed_date?: string;
+  description?: string;
+  traditional_themes?: string[];
+  default_greeting_phrases?: string[];
+  social_account_id?: string;
+  auto_publish_now?: boolean;
+}
+
+export interface CreateRandomTestEventPayload {
+  social_account_id?: string;
+  auto_publish_now?: boolean;
+  event_theme?: string;
+}
+
+export interface CustomEventResponse {
+  festival_id: string;
+  slug: string;
+  name: string;
+  category: string;
+  observed_date: string;
+  year: number;
+  published: boolean;
+  platform?: string;
+  platform_post_id?: string;
+  campaign_id?: string;
+  message: string;
+}

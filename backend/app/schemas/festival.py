@@ -43,3 +43,31 @@ class AccountFestivalPreferenceUpdate(BaseModel):
     custom_lead_days: Optional[int] = None
     custom_greeting_text: Optional[str] = None
     custom_visual_theme: Optional[str] = None
+
+class CreateCustomEventRequest(BaseModel):
+    name: str
+    category: Optional[str] = "milestone"
+    observed_date: Optional[date] = None
+    description: Optional[str] = None
+    traditional_themes: Optional[List[str]] = None
+    default_greeting_phrases: Optional[List[str]] = None
+    social_account_id: Optional[str] = None
+    auto_publish_now: bool = False
+
+class CreateRandomTestEventRequest(BaseModel):
+    social_account_id: Optional[str] = None
+    auto_publish_now: bool = True
+    event_theme: Optional[str] = None
+
+class CustomEventResponseOut(BaseModel):
+    festival_id: str
+    slug: str
+    name: str
+    category: str
+    observed_date: date
+    year: int
+    published: bool
+    platform: Optional[str] = None
+    platform_post_id: Optional[str] = None
+    campaign_id: Optional[str] = None
+    message: str
