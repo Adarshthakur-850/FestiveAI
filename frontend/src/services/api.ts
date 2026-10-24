@@ -166,5 +166,20 @@ export const api = {
   updateAutomationConfig: async (accountId: string, config: Partial<AutomationConfig>) => {
     const res = await apiClient.put<{ success: boolean; data: AutomationConfig }>(`/accounts/${accountId}/automation`, config);
     return res.data.data;
+  },
+  triggerAutoPostNow: async (accountId?: string, postPillar?: string) => {
+    const res = await apiClient.post<{ success: boolean; message: string; data: any }>(
+      '/automation/auto-post-now',
+      { account_id: accountId, post_pillar: postPillar }
+    );
+    return res.data;
+  },
+  runAutomationCycle: async () => {
+    const res = await apiClient.post<{ success: boolean; message: string; data: any }>('/automation/cycle');
+    return res.data;
+  },
+  getAutomationStatus: async () => {
+    const res = await apiClient.get<{ success: boolean; data: any }>('/automation/status');
+    return res.data.data;
   }
 };

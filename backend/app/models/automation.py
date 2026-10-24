@@ -15,7 +15,10 @@ class AutomationConfig(Base):
 
     id = Column(String(36), primary_key=True, default=generate_uuid)
     social_account_id = Column(String(36), ForeignKey("social_accounts.id", ondelete="CASCADE"), unique=True, nullable=False)
-    mode = Column(String(50), default="approval")  # approval, autonomous
+    mode = Column(String(50), default="autonomous")  # autonomous, approval
+    auto_post_pillars = Column(Boolean, default=True)  # Auto-post routine host persona pillars
+    posting_cadence = Column(String(50), default="daily")  # daily, festival_only, twice_daily
+    auto_publish_immediate = Column(Boolean, default=True)  # Auto-publish on cycle if due/triggered
     lead_time_days = Column(Integer, default=7)
     target_publish_time = Column(Time, default=time(9, 0, 0))
     timezone = Column(String(100), default="Asia/Kolkata")

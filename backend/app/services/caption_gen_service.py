@@ -320,3 +320,64 @@ class CaptionGenerator:
                 final_caption = final_caption.replace(bad_word, "").replace("  ", " ")
 
         return final_caption, curated_hashtags
+
+    @staticmethod
+    def generate_pillar_caption(
+        post_pillar: str,
+        style_profile: Optional[StyleProfile] = None,
+        account_name: Optional[str] = None,
+        topic: Optional[str] = None
+    ) -> Tuple[str, List[str]]:
+        """
+        Synthesizes an authentic routine content pillar post (Thought Leadership, Product Showcase,
+        Behind-the-Scenes, Educational) for LinkedIn and Instagram without needing an active festival.
+        """
+        brand = style_profile.brand_name if (style_profile and style_profile.brand_name) else (account_name or "TechPulse")
+        pillar_templates = {
+            "thought_leadership": [
+                f"True technical excellence is not about building the most complex system—it's about building the simplest architecture that scales reliably under pressure.\n\nHere are 3 foundational rules we stick to at {brand}:\n1. Premature optimization is the enemy of velocity.\n2. Observable pipelines beat guesswork every single time.\n3. Build for maintainability before hyper-scale.\n\nWhat is one architectural principle your team refuses to compromise on?",
+                f"The pace of AI and automation in 2026 is unprecedented. But algorithms are only as effective as the domain context and human taste steering them.\n\nAt {brand}, we believe that systems should handle the repetitive friction so engineers and creators can focus on breakthrough innovation.\n\nHow is your organization adapting its workflow to the autonomous era?",
+                f"Scalability isn't a feature you tack on right before launch—it's a mindset rooted in deliberate decoupling and resilience engineering.\n\nEvery decision made today compounds tomorrow. Invest in robust foundational pipelines."
+            ],
+            "product_showcase": [
+                f"Excited to showcase what we've been crafting at {brand}! Engineered for peak throughput, seamless integration, and zero operational drag.\n\nKey highlights:\n⚡ End-to-end automation with sub-second feedback\n🛡️ Enterprise-grade data protection & cryptographic guarantees\n📊 Real-time telemetry dashboards\n\nTake your workflows to the next level today.",
+                f"Productivity happens when tools adapt to your team, not the other way around. At {brand}, we engineered our pipeline to deliver lightning speed with rock-solid consistency.\n\nExperience seamless execution and focus on what truly moves the needle.",
+                f"Behind our latest milestone: a relentless focus on reducing latency and maximizing developer happiness. Discover how {brand} is revolutionizing autonomous delivery."
+            ],
+            "behind_the_scenes": [
+                f"Behind every smooth release is an extraordinary team solving intricate challenges over late-night debugging and great coffee ☕\n\nA glimpse into our build culture at {brand}:\n- Blameless post-mortems\n- Relentless peer code reviews\n- Celebrating the small wins as much as major milestones\n\nCulture isn't written on a poster; it's lived in every commit.",
+                f"Inside the lab at {brand}: Whiteboard sessions, lively architectural debates, and the shared excitement of turning complex ideas into deployed code.\n\nGrateful for the incredible teammates who make this journey an adventure every single day!",
+                f"Shipping day energy at {brand}! From green builds to customer feedback loops, there is nothing quite like watching teamwork transform a concept into production reality."
+            ],
+            "educational": [
+                f"💡 Engineering Tip of the Week from {brand}:\n\nWhen scaling distributed databases, connection pooling is often the silent bottleneck.\n\nQuick checklist to avoid connection starvation:\n1. Size your pool based on CPU cores, not arbitrary large numbers\n2. Always enforce query timeout ceilings\n3. Use read-replicas for analytical queries\n\nSave this post for your next architectural sprint!",
+                f"💡 Pro Tip: Master the art of idempotent API design.\n\nAn idempotent operation ensures that repeating a network request has the exact same effect as calling it once.\n\nCrucial for:\n- Webhooks and third-party event listeners\n- Payment processing pipelines\n- Automated publishing & message queues\n\nAre your core APIs fully idempotent?",
+                f"💡 AI Workflow Optimization: High context windows are powerful, but structured retrieval and clean data sanitization drive reliable production outputs. Clean inputs yield deterministic success."
+            ],
+            "community_engagement": [
+                f"To our vibrant community of builders, developers, and partners: what is the most rewarding technical challenge you tackled this week?\n\nDrop your milestones below—we love learning from how you solve real-world problems! 🙌",
+                f"Shoutout to everyone building in the open and pushing boundaries. Your feedback continues to shape the roadmap at {brand}. What feature would make your life 10x easier?",
+                f"Building great technology is a team sport. What is one tool, library, or framework you couldn't live without right now?"
+            ]
+        }
+
+        posts = pillar_templates.get(post_pillar, pillar_templates["thought_leadership"])
+        body = random.choice(posts)
+        if topic:
+            body = f"Focus on {topic}:\n\n{body}"
+
+        sign_off = style_profile.required_sign_off if (style_profile and style_profile.required_sign_off) else f"— Team {brand}"
+        final_caption = f"{body}\n\n{sign_off}"
+
+        pillar_hashtags = {
+            "thought_leadership": ["#ThoughtLeadership", "#Innovation", "#TechTrends2026", "#EngineeringLeadership", "#Scale"],
+            "product_showcase": ["#ProductExcellence", "#TechSolutions", "#SaaS", "#DeveloperTools", "#Innovation"],
+            "behind_the_scenes": ["#BehindTheScenes", "#DevCulture", "#EngineeringLife", "#TeamWork", "#Builders"],
+            "educational": ["#TechTips", "#SoftwareEngineering", "#Architecture", "#CleanCode", "#BestPractices"],
+            "community_engagement": ["#DevCommunity", "#TechCommunity", "#OpenSource", "#BuildInPublic", "#Collaboration"]
+        }
+        tags = pillar_hashtags.get(post_pillar, ["#TechPulse", "#Innovation", "#Engineering"])
+        brand_tag = f"#{brand.replace(' ', '')}"
+        curated_tags = list(dict.fromkeys(tags + [brand_tag]))
+
+        return final_caption, curated_tags

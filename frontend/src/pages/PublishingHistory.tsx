@@ -152,9 +152,22 @@ export const PublishingHistoryPage: React.FC<PublishingHistoryProps> = ({
                       </td>
                       <td className="py-3 px-4 font-mono text-[11px]">
                         {postId ? (
-                          <div className="flex items-center space-x-1.5 text-amber-400">
-                            <span>{postId}</span>
-                            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                          <div className="flex items-center space-x-2">
+                            <span className="text-amber-400 font-semibold">{postId}</span>
+                            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                            <a
+                              href={
+                                c.platform === 'instagram'
+                                  ? `https://www.instagram.com/p/${postId}/`
+                                  : `https://www.linkedin.com/feed/update/${postId}/`
+                              }
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-slate-400 hover:text-amber-300 ml-1 transition-colors"
+                              title="Open simulated or live post"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5" />
+                            </a>
                           </div>
                         ) : (
                           <span className="text-slate-500 italic">None yet</span>

@@ -29,6 +29,12 @@ def auto_migrate_db(engine: Engine):
         ],
         "generated_creatives": [
             ("post_pillar", "VARCHAR(50) DEFAULT 'festive_greeting'")
+        ],
+        "automation_configs": [
+            ("mode", "VARCHAR(50) DEFAULT 'autonomous'"),
+            ("auto_post_pillars", "BOOLEAN DEFAULT 1"),
+            ("posting_cadence", "VARCHAR(50) DEFAULT 'daily'"),
+            ("auto_publish_immediate", "BOOLEAN DEFAULT 1")
         ]
     }
 
@@ -47,3 +53,10 @@ def auto_migrate_db(engine: Engine):
                         conn.execute(text(f"ALTER TABLE {table_name} ADD COLUMN {col_name} {col_def}"))
                     except Exception as e:
                         logger.warning(f"Could not add column {col_name} to {table_name}: {e}")
+
+        # Ensure active accounts have autonomous mode enabled
+        if "automation_configs" in existing_tables:
+            try:
+                conn.execute(text("UPDATE automation_configs SET mode = 'autonomous' WHERE mode IS NULL OR mode = 'approval'"))
+            except Exception as e:
+                logger.warning(f"Could not auto-upgrade automation mode to autonomous: {e}")

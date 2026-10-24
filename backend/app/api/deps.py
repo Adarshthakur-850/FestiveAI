@@ -45,7 +45,10 @@ def ensure_organization_account(db: Session, org_id: str) -> SocialAccount:
 
         auto_config = AutomationConfig(
             social_account_id=account.id,
-            mode="approval",
+            mode="autonomous",
+            auto_post_pillars=True,
+            posting_cadence="daily",
+            auto_publish_immediate=True,
             lead_time_days=7,
             timezone="Asia/Kolkata"
         )

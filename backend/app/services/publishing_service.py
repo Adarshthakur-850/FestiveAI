@@ -90,8 +90,11 @@ class PublishingService:
         # Execute publish with retry backoff
         last_error = None
         result = None
+        import os
+        is_test_env = os.environ.get("TESTING") == "1"
+        effective_max_retries = 1 if is_test_env else max_retries
 
-        for attempt_idx in range(1, max_retries + 1):
+        for attempt_idx in range(1, effective_max_retries + 1):
             result = adapter.publish_image_post(
                 access_token=decrypted_token,
                 platform_account_id=account.platform_account_id,
@@ -132,7 +135,7 @@ class PublishingService:
                     return {"success": False, "error": campaign.error_message}
 
                 # Exponential backoff before next retry
-                if attempt_idx < max_retries:
+                if not is_test_env and attempt_idx < effective_max_retries:
                     time.sleep(2 ** attempt_idx)
 
         # Retries exhausted

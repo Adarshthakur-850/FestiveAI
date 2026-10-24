@@ -157,6 +157,9 @@ export interface AutomationConfig {
   id: string;
   social_account_id: string;
   mode: 'approval' | 'autonomous';
+  auto_post_pillars?: boolean;
+  posting_cadence?: string;
+  auto_publish_immediate?: boolean;
   lead_time_days: number;
   target_publish_time: string;
   timezone: string;
@@ -165,6 +168,24 @@ export interface AutomationConfig {
   notify_email?: string;
   notify_on_generation: boolean;
   notify_on_publish: boolean;
+}
+
+export interface AutoPostResult {
+  success: boolean;
+  message?: string;
+  campaign_id: string;
+  campaign_identifier: string;
+  platform: string;
+  account_username: string;
+  headline: string;
+  post_pillar: string;
+  caption: string;
+  hashtags: string[];
+  image_url: string;
+  platform_post_id: string;
+  permalink: string;
+  status: string;
+  mode: string;
 }
 
 export interface DashboardAnalytics {

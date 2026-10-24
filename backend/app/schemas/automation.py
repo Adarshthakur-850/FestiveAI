@@ -3,7 +3,10 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 class AutomationConfigBase(BaseModel):
-    mode: str = "approval"  # approval, autonomous
+    mode: str = "autonomous"  # autonomous, approval
+    auto_post_pillars: bool = True
+    posting_cadence: str = "daily"
+    auto_publish_immediate: bool = True
     lead_time_days: int = 7
     target_publish_time: time = time(9, 0, 0)
     timezone: str = "Asia/Kolkata"
@@ -15,6 +18,9 @@ class AutomationConfigBase(BaseModel):
 
 class AutomationConfigUpdate(BaseModel):
     mode: Optional[str] = None
+    auto_post_pillars: Optional[bool] = None
+    posting_cadence: Optional[str] = None
+    auto_publish_immediate: Optional[bool] = None
     lead_time_days: Optional[int] = None
     target_publish_time: Optional[time] = None
     timezone: Optional[str] = None
