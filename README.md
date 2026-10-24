@@ -3,8 +3,8 @@
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Adarshthakur-850/FestiveAI)
 
-[![Live App](https://img.shields.io/badge/Live_Production-Render-success.svg?style=for-the-badge&logo=render)](https://festiveai-2b3x.onrender.com/)
-[![API Docs](https://img.shields.io/badge/Swagger_Docs-API_v1-blue.svg?style=for-the-badge&logo=fastapi)](https://festiveai-2b3x.onrender.com/docs)
+[![Live App](https://img.shields.io/badge/Live_Production-Render-success.svg?style=for-the-badge&logo=render)](https://festiveai-app.onrender.com/)
+[![API Docs](https://img.shields.io/badge/Swagger_Docs-API_v1-blue.svg?style=for-the-badge&logo=fastapi)](https://festiveai-app.onrender.com/docs)
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688.svg?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React-19-61DAFB.svg?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
@@ -18,11 +18,11 @@
 
 | Service | Public Production URL |
 | :--- | :--- |
-| **Unified Web Dashboard** | **[https://festiveai-2b3x.onrender.com/](https://festiveai-2b3x.onrender.com/)** |
-| **Interactive API Documentation (Swagger)** | **[https://festiveai-2b3x.onrender.com/docs](https://festiveai-2b3x.onrender.com/docs)** |
-| **Alternative OpenAPI Docs (ReDoc)** | **[https://festiveai-2b3x.onrender.com/redoc](https://festiveai-2b3x.onrender.com/redoc)** |
-| **Backend Health Check** | **[https://festiveai-2b3x.onrender.com/health](https://festiveai-2b3x.onrender.com/health)** |
-| **API Base Endpoint** | **[https://festiveai-2b3x.onrender.com/api/v1](https://festiveai-2b3x.onrender.com/api/v1)** |
+| **Unified Web Dashboard** | **[https://festiveai-app.onrender.com/](https://festiveai-app.onrender.com/)** |
+| **Interactive API Documentation (Swagger)** | **[https://festiveai-app.onrender.com/docs](https://festiveai-app.onrender.com/docs)** |
+| **Alternative OpenAPI Docs (ReDoc)** | **[https://festiveai-app.onrender.com/redoc](https://festiveai-app.onrender.com/redoc)** |
+| **Backend Health Check** | **[https://festiveai-app.onrender.com/health](https://festiveai-app.onrender.com/health)** |
+| **API Base Endpoint** | **[https://festiveai-app.onrender.com/api/v1](https://festiveai-app.onrender.com/api/v1)** |
 
 > [!NOTE]
 > The live deployment runs as a unified single-container full-stack application on Render. The FastAPI engine serves the REST API, the deterministic graphics synthesizer, the persistent background scheduler, and the compiled responsive React 19 Single Page Application (SPA).
@@ -168,7 +168,7 @@ FestiveAI includes 7 dedicated, production-grade pages:
 
 ## 🔌 REST API Documentation
 
-The complete interactive Swagger documentation is available live at **[https://festiveai-2b3x.onrender.com/docs](https://festiveai-2b3x.onrender.com/docs)**.
+The complete interactive Swagger documentation is available live at **[https://festiveai-app.onrender.com/docs](https://festiveai-app.onrender.com/docs)**.
 
 ### Key API Endpoints
 
@@ -328,5 +328,5 @@ This project is licensed under the [MIT License](LICENSE).
 
 <p align="center">
   <b>FestiveAI</b> — Engineered for cultural authenticity, brand consistency, and autonomous peace of mind. 🪔✨<br>
-  Explore the live app: <a href="https://festiveai-2b3x.onrender.com/">https://festiveai-2b3x.onrender.com/</a>
+  Explore the live app: <a href="https://festiveai-app.onrender.com/">https://festiveai-app.onrender.com/</a>
 </p>

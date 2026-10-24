@@ -65,7 +65,7 @@ If you prefer to configure the service manually via the Render UI:
 ## Verification After Deployment
 
 Once the build completes (typically 45–60 seconds):
-- **Health Check**: `https://<your-new-service-name>.onrender.com/health`
-- **Frontend Application**: `https://<your-new-service-name>.onrender.com/`
-- **Interactive API Docs**: `https://<your-new-service-name>.onrender.com/docs`
-- **Automation Status**: `https://<your-new-service-name>.onrender.com/api/v1/automation/status`
+- **Live Application**: `https://festiveai-app.onrender.com/`
+- **Backend Health Check**: `https://festiveai-app.onrender.com/health`
+- **Interactive Swagger Docs**: `https://festiveai-app.onrender.com/docs`
+- **Automation Engine Status**: `https://festiveai-app.onrender.com/api/v1/automation/status`
