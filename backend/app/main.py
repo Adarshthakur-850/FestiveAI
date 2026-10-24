@@ -83,9 +83,11 @@ app = FastAPI(
 )
 
 # CORS Middleware
+origins = [o for o in settings.BACKEND_CORS_ORIGINS if o != "*"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.BACKEND_CORS_ORIGINS,
+    allow_origins=origins,
+    allow_origin_regex=r"https?://.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -128,7 +130,7 @@ if frontend_dist_path:
 
     @app.get("/{full_path:path}", include_in_schema=False)
     async def serve_spa(full_path: str):
-        if full_path.startswith("api") or full_path.startswith("static") or full_path in ("health", "docs", "openapi.json"):
+        if full_path.startswith("api") or full_path.startswith("static") or full_path.startswith("redoc") or full_path in ("health", "docs", "openapi.json"):
             raise HTTPException(status_code=404, detail="Endpoint not found")
         
         file_path = os.path.join(frontend_dist_path, full_path)

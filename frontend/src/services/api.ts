@@ -31,6 +31,18 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
+// Response interceptor to surface human-readable backend error messages
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const serverMessage = error.response?.data?.detail || error.response?.data?.message;
+    if (serverMessage) {
+      error.message = typeof serverMessage === 'string' ? serverMessage : JSON.stringify(serverMessage);
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const api = {
   // Analytics & System
   getAnalytics: async () => {

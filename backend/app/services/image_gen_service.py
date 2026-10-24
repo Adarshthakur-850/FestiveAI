@@ -14,6 +14,25 @@ def hex_to_rgb(hex_code: str) -> Tuple[int, int, int]:
         hex_code = "".join([c * 2 for c in hex_code])
     return int(hex_code[0:2], 16), int(hex_code[2:4], 16), int(hex_code[4:6], 16)
 
+def load_scalable_font(size: int, bold: bool = False) -> ImageFont.ImageFont:
+    """Safely loads a high-quality TrueType font across Windows, macOS, Linux, and Docker."""
+    font_names = [
+        "arialbd.ttf" if bold else "arial.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf" if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf",
+        "LiberationSans-Bold.ttf" if bold else "LiberationSans-Regular.ttf",
+        "segoeui.ttf",
+    ]
+    for font_name in font_names:
+        try:
+            return ImageFont.truetype(font_name, size)
+        except Exception:
+            continue
+    try:
+        return ImageFont.load_default(size=size)
+    except Exception:
+        return ImageFont.load_default()
+
 class GreetingCompositor:
     """
     Deterministic Image Composition Engine using Pillow.
@@ -225,11 +244,7 @@ class GreetingCompositor:
         draw.ellipse([lx + 16, ly + 20, lx + 30, ly + 34], fill=accent_color)
         
         # Brand name text
-        try:
-            font = ImageFont.truetype("arial.ttf", 20)
-        except Exception:
-            font = ImageFont.load_default()
-
+        font = load_scalable_font(20, bold=True)
         display_text = brand_name[:16] if brand_name else "FestiveAI"
         draw.text((lx + 42, ly + 16), display_text, fill=(255, 255, 255, 240), font=font)
 
@@ -306,13 +321,8 @@ class GreetingCompositor:
         cls.draw_cultural_elements(draw, width, height, festival_slug, accent_rgb)
 
         # 4. Festival Greeting Typography
-        # Load fonts with clean fallbacks
-        try:
-            title_font = ImageFont.truetype("arialbd.ttf", 68)
-            sub_font = ImageFont.truetype("arial.ttf", 28)
-        except Exception:
-            title_font = ImageFont.load_default()
-            sub_font = ImageFont.load_default()
+        title_font = load_scalable_font(68, bold=True)
+        sub_font = load_scalable_font(28, bold=False)
 
         # Text position & drop shadow for high contrast & readability
         cx = width // 2
