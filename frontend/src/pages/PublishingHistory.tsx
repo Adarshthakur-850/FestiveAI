@@ -65,22 +65,22 @@ export const PublishingHistoryPage: React.FC<PublishingHistoryProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center space-x-3">
-          <div className="relative">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full sm:w-auto">
+          <div className="relative flex-1 sm:flex-none">
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search campaigns..."
-              className="bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-200 focus:outline-none focus:border-amber-500 w-48 sm:w-64"
+              className="bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-200 focus:outline-none focus:border-amber-500 w-full sm:w-64"
             />
           </div>
 
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none"
+            className="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none w-full sm:w-auto"
           >
             <option value="all">All Statuses</option>
             <option value="published">Published</option>
@@ -94,7 +94,7 @@ export const PublishingHistoryPage: React.FC<PublishingHistoryProps> = ({
       {/* Audit Table */}
       <div className="bg-slate-900/60 border border-slate-800/80 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+          <table className="w-full text-left text-xs min-w-[640px]">
             <thead className="bg-slate-800/50 text-slate-400 uppercase tracking-wider font-bold border-b border-slate-800 text-[11px]">
               <tr>
                 <th className="py-3.5 px-4">Campaign Identifier</th>

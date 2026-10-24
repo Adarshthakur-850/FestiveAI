@@ -195,11 +195,11 @@ export const ContentStudio: React.FC<ContentStudioProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center space-x-3 shrink-0">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 shrink-0 w-full sm:w-auto">
           <select
             value={selectedFestivalSlug}
             onChange={(e) => setSelectedFestivalSlug(e.target.value)}
-            className="bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-100 font-semibold focus:outline-none focus:border-amber-500"
+            className="bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-100 font-semibold focus:outline-none focus:border-amber-500 w-full sm:w-auto"
           >
             {upcomingFestivals.map((f) => (
               <option key={f.slug} value={f.slug}>
@@ -211,7 +211,7 @@ export const ContentStudio: React.FC<ContentStudioProps> = ({
           <button
             onClick={() => handleGenerate(false)}
             disabled={isGenerating}
-            className="px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md shadow-amber-500/20 transition-all flex items-center space-x-2"
+            className="px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md shadow-amber-500/20 transition-all flex items-center justify-center space-x-2"
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>{isGenerating ? 'Synthesizing...' : campaign ? 'Regenerate' : 'Generate Creative'}</span>
@@ -320,7 +320,7 @@ export const ContentStudio: React.FC<ContentStudioProps> = ({
           )}
 
           {activeCreative && (
-            <div className="grid grid-cols-3 gap-3 text-xs bg-slate-800/40 p-3 rounded-xl border border-slate-800 text-slate-300">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs bg-slate-800/40 p-3 rounded-xl border border-slate-800 text-slate-300">
               <div>
                 <span className="text-slate-500 block text-[10px] uppercase font-bold">Contrast & Readability</span>
                 <span className="text-emerald-400 font-semibold">Passed (Gold / Dark)</span>

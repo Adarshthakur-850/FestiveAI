@@ -35,17 +35,17 @@ export const Overview: React.FC<OverviewProps> = ({
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Hero Countdown Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-amber-600/30 via-rose-600/20 to-indigo-900/40 border border-amber-500/30 p-8 shadow-xl">
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-r from-amber-600/30 via-rose-600/20 to-indigo-900/40 border border-amber-500/30 p-5 sm:p-8 shadow-xl">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-semibold">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Next Astronomical Festival Approaching</span>
             </div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-white">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
               {nextFestival ? nextFestival.name : 'All Festival Cycles Synced'}
             </h1>
-            <p className="text-sm text-slate-300 max-w-xl">
+            <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
               {nextFestival ? (
                 <>
                   Observed on <span className="font-semibold text-amber-300">{nextFestival.observed_date}</span> (in {nextFestival.days_until} days).
@@ -58,17 +58,17 @@ export const Overview: React.FC<OverviewProps> = ({
             </p>
           </div>
 
-          <div className="flex items-center space-x-3 shrink-0">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 shrink-0 w-full sm:w-auto">
             <button
               onClick={() => onNavigate('studio')}
-              className="px-5 py-2.5 rounded-xl text-sm font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-lg shadow-amber-500/30 transition-all flex items-center space-x-2"
+              className="px-5 py-2.5 rounded-xl text-sm font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-lg shadow-amber-500/30 transition-all flex items-center justify-center space-x-2"
             >
               <span>Open Content Studio</span>
               <ArrowRight className="w-4 h-4" />
             </button>
             <button
               onClick={() => onNavigate('calendar')}
-              className="px-4 py-2.5 rounded-xl text-sm font-medium bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 transition-all"
+              className="px-4 py-2.5 rounded-xl text-sm font-medium bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 transition-all text-center"
             >
               View Calendar
             </button>
@@ -130,10 +130,10 @@ export const Overview: React.FC<OverviewProps> = ({
             {(upcomingFestivals || []).slice(0, 4).map((f) => (
               <div
                 key={f.festival_id}
-                className="flex items-center justify-between p-3.5 rounded-xl bg-slate-800/40 border border-slate-800 hover:border-slate-700 transition-all"
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-slate-800/40 border border-slate-800 hover:border-slate-700 transition-all"
               >
                 <div className="flex items-center space-x-3.5">
-                  <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex flex-col items-center justify-center text-amber-400">
+                  <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex flex-col items-center justify-center text-amber-400 shrink-0">
                     <span className="text-[10px] uppercase font-bold">{new Date(f.observed_date).toLocaleString('default', { month: 'short' })}</span>
                     <span className="text-sm font-black leading-none">{new Date(f.observed_date).getDate()}</span>
                   </div>
@@ -147,7 +147,7 @@ export const Overview: React.FC<OverviewProps> = ({
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center justify-between sm:justify-end space-x-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800/50">
                   <span
                     className={`text-xs px-2.5 py-1 rounded-full font-medium ${
                       f.status === 'published'

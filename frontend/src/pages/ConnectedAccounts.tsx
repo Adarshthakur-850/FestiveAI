@@ -183,8 +183,8 @@ export const ConnectedAccounts: React.FC<ConnectedAccountsProps> = ({
               </div>
             </div>
 
-            <div className="flex items-center justify-between pt-1">
-              <div className="flex items-center space-x-2">
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+              <div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={() => handleAnalyze(acc.id)}
                   disabled={isLoading}
@@ -205,7 +205,7 @@ export const ConnectedAccounts: React.FC<ConnectedAccountsProps> = ({
 
               <button
                 onClick={() => handleDisconnect(acc.id)}
-                className="p-2 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-950/30 transition-all"
+                className="p-2 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-950/30 transition-all ml-auto"
                 title="Disconnect Account"
               >
                 <Trash2 className="w-4 h-4" />
@@ -217,8 +217,8 @@ export const ConnectedAccounts: React.FC<ConnectedAccountsProps> = ({
 
       {/* Inspect Historical Posts & Post Types Modal */}
       {inspectModalOpen && inspectAccount && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-4xl p-6 space-y-5 shadow-2xl max-h-[85vh] flex flex-col">
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-4xl p-4 sm:p-6 space-y-4 sm:space-y-5 shadow-2xl max-h-[90vh] flex flex-col">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <div>
                 <h3 className="text-lg font-bold text-white flex items-center space-x-2">
@@ -304,8 +304,8 @@ export const ConnectedAccounts: React.FC<ConnectedAccountsProps> = ({
 
       {/* Connect Account Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg p-6 space-y-5 shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg p-4 sm:p-6 space-y-4 sm:space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-bold text-white">Connect Social Media Account</h2>
               <button

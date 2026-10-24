@@ -269,7 +269,7 @@ export const StyleProfilePage: React.FC<StyleProfileProps> = ({
 
             <div>
               <label className="text-xs font-semibold text-slate-300 block mb-1.5">Visual Aesthetic Archetype</label>
-              <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                 {[
                   { id: 'tech_innovator', label: 'Tech Innovator', desc: 'Futuristic Dark Navy & Circuit Accents' },
                   { id: 'corporate_executive', label: 'Corporate B2B', desc: 'Refined Executive Gold & Deep Slate' },
@@ -318,7 +318,7 @@ export const StyleProfilePage: React.FC<StyleProfileProps> = ({
               </div>
 
               {/* Pillar Legend Items */}
-              <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                 {Object.entries(contentPillars).map(([key, val]) => (
                   <div key={key} className="flex items-center justify-between p-2 rounded-lg bg-slate-800/50 border border-slate-700/50">
                     <div className="flex items-center space-x-1.5 truncate">
@@ -389,7 +389,7 @@ export const StyleProfilePage: React.FC<StyleProfileProps> = ({
 
           <div>
             <label className="text-xs font-semibold text-slate-300 block mb-2">Dominant Brand Colors (Hex)</label>
-            <div className="flex items-center space-x-3">
+            <div className="flex flex-wrap items-center gap-3">
               {dominantColors.map((col, idx) => (
                 <div key={idx} className="space-y-1.5 text-center">
                   <div
@@ -533,7 +533,7 @@ export const StyleProfilePage: React.FC<StyleProfileProps> = ({
 
           <div>
             <label className="text-xs font-semibold text-slate-300 block mb-2">Emoji Frequency</label>
-            <div className="grid grid-cols-4 gap-2 text-xs">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
               {['none', 'minimal', 'moderate', 'expressive'].map((freq) => (
                 <button
                   key={freq}
@@ -553,7 +553,7 @@ export const StyleProfilePage: React.FC<StyleProfileProps> = ({
 
           <div>
             <label className="text-xs font-semibold text-slate-300 block mb-2">Supported Greeting Languages</label>
-            <div className="flex items-center space-x-2 text-xs">
+            <div className="flex flex-wrap items-center gap-2 text-xs">
               {[
                 { id: 'en', label: 'English' },
                 { id: 'hi', label: 'Hindi (हिंदी)' },

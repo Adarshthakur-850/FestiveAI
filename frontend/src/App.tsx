@@ -20,6 +20,7 @@ export const App: React.FC = () => {
   const [recentCampaigns, setRecentCampaigns] = useState<PublishingCampaign[]>([]);
   const [studioTargetFestival, setStudioTargetFestival] = useState<{ slug: string; year: number } | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const loadData = async () => {
     try {
@@ -64,16 +65,20 @@ export const App: React.FC = () => {
         selectedAccountId={selectedAccountId}
         onSelectAccount={(id) => setSelectedAccountId(id)}
         onRefreshData={loadData}
+        isMobileMenuOpen={isMobileMenuOpen}
+        onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       />
 
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative">
         <Sidebar
           currentTab={currentTab}
           onTabChange={(tab) => setCurrentTab(tab)}
           pendingApprovalsCount={pendingApprovals}
+          isOpen={isMobileMenuOpen}
+          onClose={() => setIsMobileMenuOpen(false)}
         />
 
-        <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-gradient-to-b from-slate-950 via-slate-900/30 to-slate-950">
+        <main className="flex-1 overflow-y-auto p-3.5 sm:p-6 md:p-8 bg-gradient-to-b from-slate-950 via-slate-900/30 to-slate-950">
           {isLoading ? (
             <div className="h-full flex items-center justify-center space-x-3 text-slate-400">
               <div className="w-5 h-5 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
