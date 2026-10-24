@@ -1,6 +1,8 @@
 # FestiveAI 🪔✨
 ### Autonomous Social Media Profile Learning, Deterministic Cultural Creative Synthesis, and Guaranteed Zero-Duplicate Festival Publishing Platform
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Adarshthakur-850/FestiveAI)
+
 [![Live App](https://img.shields.io/badge/Live_Production-Render-success.svg?style=for-the-badge&logo=render)](https://festiveai-2b3x.onrender.com/)
 [![API Docs](https://img.shields.io/badge/Swagger_Docs-API_v1-blue.svg?style=for-the-badge&logo=fastapi)](https://festiveai-2b3x.onrender.com/docs)
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)

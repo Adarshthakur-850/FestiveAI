@@ -4,16 +4,20 @@ This guide explains how to create a **brand-new, high-performance Render hosting
 
 ---
 
-## Method 1: Instant Blueprint Deployment (Recommended — 1 Click)
+## Method 1: Instant 1-Click Deploy (Fastest)
+
+Click the official Render deployment button below:
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Adarshthakur-850/FestiveAI)
+
+**Direct Link**: [https://render.com/deploy?repo=https://github.com/Adarshthakur-850/FestiveAI](https://render.com/deploy?repo=https://github.com/Adarshthakur-850/FestiveAI)
 
 Render automatically detects [`render.yaml`](render.yaml) in your repository and configures all settings, environment variables, build scripts, and automatic deployments.
 
-1. Go to the [Render Dashboard](https://dashboard.render.com/).
-2. Click the **New +** button in the top navigation bar.
-3. Select **Blueprint**.
-4. Connect or select your GitHub repository: `Adarshthakur-850/FestiveAI`.
-5. Render will load `render.yaml`. Click **Apply**.
-6. Render will automatically:
+1. Click the button or link above (make sure you are logged in at [Render](https://dashboard.render.com)).
+2. Render will show the blueprint configuration for `festiveai-app`.
+3. Click **Apply**.
+4. Render will automatically:
    - Create a new web service named `festiveai-app`.
    - Run `./render-build.sh` to install dependencies.
    - Start the FastAPI backend with `uvicorn main:app --host 0.0.0.0 --port $PORT`.
